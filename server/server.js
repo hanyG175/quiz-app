@@ -9,11 +9,20 @@ dotenv.config();
 app.use(express.json());
 app.use(cors());
 
-// Serve static files from React in production
-if (process.env.NODE_ENV === "production") {
-  app.use(express.static(path.join(__dirname, "../client/build")));
+// Serve static files from the React app in production
+if (isProduction) {
+  const buildPath = path.join(__dirname, "../client/build");
+  
+  // Ensure the build folder exists
+  const fs = require("fs");
+  if (!fs.existsSync(buildPath)) {
+    console.error("Build folder not found. Make sure to build the React app.");
+    process.exit(1); // Exit the process if `client/build` is missing
+  }
+
+  app.use(express.static(buildPath));
   app.get("*", (req, res) => {
-    res.sendFile(path.join(__dirname, "../client/build", "index.html"));
+    res.sendFile(path.join(buildPath, "index.html"));
   });
 }
 
