@@ -24,46 +24,50 @@ export default function Login() {
         }
     };
 
-    const handleSubmit = async (e) => {
-        e.preventDefault();
+    
+ const handleSubmit = async (e) => {
+    e.preventDefault();
 
-        if (!validateEmail(formData.email)) {
-            setEmailError('Invalid email format');
-            return;
-        }
+    if (!validateEmail(formData.email)) {
+        setEmailError('Invalid email format');
+        return;
+    }
 
-        try {
-            const response = await fetch('https://quiz-app-serve.onrender.com/api/auth/login', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ name: formData.name, email: formData.email }),
-            });
-            
+    try {
+        const response = await fetch('https://quiz-app-serve.onrender.com/api/auth/login', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ name: formData.name, email: formData.email }),
+        });
 
-            if (response.ok) {
-                const data = await response.json();
-                const { token } = data;
-                console.log(data)
+        if (response.ok) {
+            const data = await response.json();
+            console.log("Login successful:", data);
 
-                localStorage.setItem('token', token);
-                localStorage.setItem('score', data.score);
+            const { token, hasTakenQuiz, score, category, subcategory } = data;
 
-                const hasTakenQuiz = data.hasTakenQuiz || false;
-                localStorage.setItem('hasTakenQuiz', hasTakenQuiz);
+            // Store data in localStorage
+            localStorage.setItem('token', token);
+            localStorage.setItem('score', score || 0);
+            localStorage.setItem('hasTakenQuiz', hasTakenQuiz);
 
-                if (hasTakenQuiz) {
-                    navigate('/completion');
-                } else {
-                    navigate(`/quiz-intro?category=${data.category}&subcategory=${data.subcategory}`);
-                }
+            // Navigate based on quiz status
+            if (hasTakenQuiz) {
+                navigate('/completion');
             } else {
-                const errorData = await response.json();
-                setErrorMessage(errorData.error || 'Login failed. Please try again.');
+                navigate(`/quiz-intro?category=${category}&subcategory=${subcategory}`);
             }
-        } catch (error) {
-            setErrorMessage('An error occurred. Please try again later.');
+        } else {
+            const errorData = await response.json();
+            setErrorMessage(errorData.error || 'Login failed. Please try again.');
+            console.error("Login failed:", errorData);
         }
-    };
+    } catch (error) {
+        console.error("Error in login request:", error);
+        setErrorMessage('An error occurred. Please try again later.');
+    }
+};
+
 
     return (
         <div className="flex flex-col items-center justify-center min-h-screen bg-cover bg-center bg-no-repeat p-6"
