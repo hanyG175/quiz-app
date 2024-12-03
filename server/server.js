@@ -10,13 +10,13 @@ app.use(express.json());
 app.use(cors());
 
 
-// Serve static files from React in production
-if (process.env.NODE_ENV === "production") {
-  app.use(express.static(path.join(__dirname, "../client/build")));
-  app.get("*", (req, res) => {
-    res.sendFile(path.join(__dirname, "../client/build", "index.html"));
-  });
-}
+// Serve the React build folder
+app.use(express.static(path.join(__dirname, 'client/build')));
+
+// Handle all other routes to serve the React app
+app.get('*', (req, res) => {
+    res.sendFile(path.join(__dirname, 'client/build', 'index.html'));
+});
 
 
 // Connect to MongoDB
