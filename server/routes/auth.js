@@ -29,13 +29,14 @@ router.post('/register', async (req, res) => {
 // Login User
 router.post('/login', async (req, res) => {
   try {
+    console.log("I am Here");
     const { name,email } = req.body;
     const user = await User.findOne({ name, email  });
     if (!user) return res.status(404).json({ error: 'User not found' });
-
+    console.log(user)
     const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET, { expiresIn: '1h' });
     res.json({ token, hasTakenQuiz: user.hasTakenQuiz, score: user.score, category: user.category, subcategory: user.subcategory });
-    
+    console.log("I am here 2")
   } catch (error) {
     res.status(500).json({ error: 'Error logging in' });
   }
