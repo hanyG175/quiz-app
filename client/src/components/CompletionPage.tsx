@@ -20,7 +20,7 @@ export default function Completion() {
 
       if (token ) {
         axios
-          .post('http://localhost:3000/api/quiz/submit-score', { score: quizScore }, {
+          .post('https://quiz-app-serve.onrender.com/api/quiz/submit-score', { score: quizScore }, {
             headers: { Authorization: `Bearer ${token}` },
           })
           .then((response) => {
