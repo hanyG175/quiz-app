@@ -16,8 +16,6 @@ app.get('*', (req, res) => {
     res.redirect(`${CLIENT_URL}${req.originalUrl}`);
 });
 
-const cors = require('cors');
-
 const CLIENT_URL = "https://quiz-app-vhpg.onrender.com";
 
 app.use(cors({
