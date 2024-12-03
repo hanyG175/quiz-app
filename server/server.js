@@ -7,7 +7,6 @@ const app = express();
 
 dotenv.config();
 app.use(express.json());
-app.use(cors());
 
 const CLIENT_URL = "https://quiz-app-vhpg.onrender.com";
 
