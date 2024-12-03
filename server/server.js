@@ -16,7 +16,15 @@ app.get('*', (req, res) => {
     res.redirect(`${CLIENT_URL}${req.originalUrl}`);
 });
 
+const cors = require('cors');
 
+const CLIENT_URL = "https://quiz-app-vhpg.onrender.com";
+
+app.use(cors({
+    origin: CLIENT_URL,
+    methods: ['GET', 'POST', 'PUT', 'DELETE'], // Specify allowed HTTP methods
+    credentials: true // If you're using cookies or authentication
+}));
 
 // Connect to MongoDB
 mongoose.connect(process.env.MONGO_URI, { useNewUrlParser: true, useUnifiedTopology: true })
