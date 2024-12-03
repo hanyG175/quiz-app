@@ -19,4 +19,7 @@ body {
     rgb(var(--background-start-rgb));
     font-family: 'Inter', sans-serif;
 }
+.no-select {
+  user-select: none; /* Disable text selection */
+}
 

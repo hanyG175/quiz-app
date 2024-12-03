@@ -1,23 +1,59 @@
-'use client'
-import React from 'react'
+'use client';
+import React, { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-export default function Completion() {
-const navigate = useNavigate();
-const location = useLocation();
-const searchParams = new URLSearchParams(location.search);
-const score = searchParams.get('score')
+import axios from 'axios';
 
-  
+export default function Completion() {
+  const navigate = useNavigate();
+  const location = useLocation();
+  const searchParams = new URLSearchParams(location.search);
+  const [score, setScore] = useState<number | null>(null);
+
+  const token = localStorage.getItem('token');
+  const qScore = parseInt(localStorage.getItem('score')|| '', 10);
+  const accessedFromQuiz = searchParams.has('score');
+
+  useEffect(() => {
+    if (accessedFromQuiz) {
+      const quizScore = parseInt(searchParams.get('score') || '', 10);
+      setScore(quizScore);
+
+      if (token ) {
+        axios
+          .post('http://localhost:3000/api/quiz/submit-score', { score: quizScore }, {
+            headers: { Authorization: `Bearer ${token}` },
+          })
+          .then((response) => {
+            console.log('Score submitted successfully:', response.data);
+            localStorage.setItem('hasTakenQuiz', 'true');
+            
+          })
+          .catch((error) => {
+            console.error('Error submitting score:', error);
+          });
+      }
+    } else if (token) {
+      console.log(qScore);
+      setScore(qScore);
+    } else {
+      navigate('/login');
+    }
+  }, [token, accessedFromQuiz, navigate, qScore]);
+
   const handleBackHome = () => {
-    navigate('/')
-  }
+    localStorage.removeItem('token');
+    localStorage.removeItem('userData');
+    navigate('/');
+  };
 
   return (
-    <main className="flex min-h-screen flex-col items-center justify-center p-4 min-h-screen bg-cover bg-center bg-no-repeat"
-    style={{ backgroundImage: "url('/images/bg10.jpeg')" }}
+    <main className="flex min-h-screen  flex-col items-center justify-center p-4 min-h-screen bg-cover bg-center bg-no-repeat"
+    rel="preload"
+    style={{ backgroundImage: "url('/images/bg10.webp')"}}
     >
       <h1 className="text-4xl font-bold mb-8">Quiz Completed 🎉</h1>
-      <div className="w-full max-w-md bg-white rounded-lg shadow-lg p-6">
+      <div className="max-w-md no-select w-full space-y-8">
+        <div className="bg-white rounded-lg shadow-xl p-8 text-center">
         <div className="mb-6">
           <h2 className="text-2xl font-semibold mb-2">Thank You!</h2>
           <p className="text-lg mb-4">You have completed the test. We appreciate your participation!</p>
@@ -35,8 +71,24 @@ const score = searchParams.get('score')
             onClick={handleBackHome}
             className="px-6 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors"
           >
-            Back to Home
+            Sign Out & Back to Home
           </button>
+        </div>
+        </div>
+
+        <div className="bg-white no-select rounded-lg shadow-xl p-8 text-center">
+          <h2 className="text-2xl font-bold mb-4 text-purple-600">Stay Connected!</h2>
+          <p className="text-lg mb-6 text-gray-600">
+            While you're waiting for the final results, why not check out our Instagram page for the latest updates and exciting science content?
+          </p>
+          <a
+            href="https://www.instagram.com/sciencecreativityclub"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-block bg-gradient-to-r from-purple-600 to-pink-600 text-white font-bold py-3 px-6 rounded-lg hover:from-purple-700 hover:to-pink-700 transition duration-300 transform hover:scale-105 animate-bounce-light"
+          >
+            Visit Our Instagram
+          </a>
         </div>
       </div>
     </main>
