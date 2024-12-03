@@ -9,14 +9,13 @@ dotenv.config();
 app.use(express.json());
 app.use(cors());
 
+const CLIENT_URL = "https://quiz-app-vhpg.onrender.com";
 
-// Serve the React build folder
-app.use(express.static(path.join(__dirname, '../client/build')));
-
-// Handle all other routes to serve the React app
+// Forward all unknown requests to the client
 app.get('*', (req, res) => {
-    res.sendFile(path.join(__dirname, '../client/build', 'index.html'));
+    res.redirect(`${CLIENT_URL}${req.originalUrl}`);
 });
+
 
 
 // Connect to MongoDB
