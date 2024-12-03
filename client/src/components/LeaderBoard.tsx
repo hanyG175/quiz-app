@@ -21,7 +21,7 @@ export default function Leaderboard() {
   useEffect(() => {
     const fetchLeaderboard = async () => {
       try {
-        const response = await fetch('http://localhost:3000/api/quiz/leaderboard');
+        const response = await fetch('https://quiz-app-serve.onrender.com/api/quiz/leaderboard');
         const data = await response.json();
         setUsers(data);
       } catch (error) {
@@ -53,7 +53,7 @@ export default function Leaderboard() {
 
   const exportScores = async () => {
     try {
-      const response = await fetch('http://localhost:3000/api/quiz/export-scores');
+      const response = await fetch('https://quiz-app-serve.onrender.com/api/quiz/export-scores');
       if (response.ok) {
         const blob = await response.blob();
         const url = window.URL.createObjectURL(blob);
