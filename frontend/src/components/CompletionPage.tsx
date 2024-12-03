@@ -47,7 +47,7 @@ export default function Completion() {
   };
 
   return (
-    <main className="flex min-h-screen  flex-col items-center justify-center p-4 min-h-screen bg-cover bg-center bg-no-repeat"
+    <main className="flex flex-col items-center justify-center p-4 min-h-screen bg-cover bg-center bg-no-repeat"
     rel="preload"
     style={{ backgroundImage: "url('/images/bg10.webp')"}}
     >
