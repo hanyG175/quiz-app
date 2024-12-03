@@ -11,11 +11,11 @@ app.use(cors());
 
 
 // Serve the React build folder
-app.use(express.static(path.join(__dirname, 'client/build')));
+app.use(express.static(path.join(__dirname, '../client/build')));
 
 // Handle all other routes to serve the React app
 app.get('*', (req, res) => {
-    res.sendFile(path.join(__dirname, 'client/build', 'index.html'));
+    res.sendFile(path.join(__dirname, '../client/build', 'index.html'));
 });
 
 
