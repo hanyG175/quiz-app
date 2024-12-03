@@ -38,10 +38,12 @@ export default function Login() {
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ name: formData.name, email: formData.email }),
             });
+            
 
             if (response.ok) {
                 const data = await response.json();
                 const { token } = data;
+                console.log(data)
 
                 localStorage.setItem('token', token);
                 localStorage.setItem('score', data.score);
