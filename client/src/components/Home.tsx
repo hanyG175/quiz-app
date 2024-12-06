@@ -76,7 +76,7 @@ export default function Home() {
             rel="noopener noreferrer" 
             className="inline-block bg-gradient-to-r from-purple-600 to-pink-600 text-white font-bold py-3 px-6 rounded-lg hover:from-purple-700 hover:to-pink-700 transition duration-300 transform hover:scale-105"
           >
-            Follow Us @sciencecreativityclub
+            Follow Us @sc_club19
           </a>
         </div>
       </div>
