@@ -16,6 +16,11 @@ app.use(cors({
     credentials: true,
 }));
 
+// Catch-all redirect for unknown routes to the frontend
+app.get('*', (req, res) => {
+    res.redirect(`https://quiz-app-vhpg.onrender.com${req.originalUrl}`);
+});
+
 // MongoDB Connection
 mongoose.connect(process.env.MONGO_URI, { useNewUrlParser: true, useUnifiedTopology: true })
     .then(() => console.log('MongoDB connected'))
@@ -28,10 +33,6 @@ app.use('/api/auth', authRoutes);
 const quizRoutes = require('./routes/quiz');
 app.use('/api/quiz', quizRoutes);
 
-// Catch-all redirect for unknown routes to the frontend
-app.get('*', (req, res) => {
-    res.redirect(`https://quiz-app-vhpg.onrender.com${req.originalUrl}`);
-    });
 
 // Server Start
 const PORT = process.env.PORT || 5000;
