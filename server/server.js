@@ -11,14 +11,14 @@ dotenv.config();
 // Middleware
 app.use(express.json());
 app.use(cors({
-    origin: "https://quiz-app-vhpg.onrender.com", // Frontend URL
+    origin: "https://mindquest.onrender.com", // Frontend URL
     methods: ['GET', 'POST', 'PUT', 'DELETE'],
     credentials: true,
 }));
 
 // Catch-all redirect for unknown routes to the frontend
 app.get('*', (req, res) => {
-    res.redirect(`https://quiz-app-vhpg.onrender.com${req.originalUrl}`);
+    res.redirect(`https://mindquest.onrender.com${req.originalUrl}`);
 });
 
 // MongoDB Connection
