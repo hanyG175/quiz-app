@@ -18,7 +18,7 @@ app.use(cors({
 
 // Catch-all route for React
 app.get("*", (req, res) => {
-  res.sendFile(path.join(__dirname, '../build', 'index.html'));
+  res.sendFile((process.cwd(),'client','dist','index.html'));
 });
 
 // Catch-all redirect for unknown routes to the frontend
