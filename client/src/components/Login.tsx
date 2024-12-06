@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import Loader from './Loader.tsx';
 
 export default function Login() {
     const [formData, setFormData] = useState({
@@ -8,6 +9,7 @@ export default function Login() {
     });
     const [emailError, setEmailError] = useState('');
     const [errorMessage, setErrorMessage] = useState('');
+const [isLoading, setIsLoading] = useState(false); // Loading state
     const navigate = useNavigate();
 
     const validateEmail = (email) => {
@@ -32,7 +34,7 @@ export default function Login() {
         setEmailError('Invalid email format');
         return;
     }
-
+setIsLoading(true); // Show the loader
     try {
         const response = await fetch('https://quiz-app-serve.onrender.com/api/auth/login', {
             method: 'POST',
@@ -52,27 +54,35 @@ export default function Login() {
             localStorage.setItem('hasTakenQuiz', hasTakenQuiz);
 
             // Navigate based on quiz status
+            setTimeout(() => {
+                setIsLoading(false); // Hide the loader
             if (hasTakenQuiz) {
                 navigate('/completion');
             } else {
                 navigate(`/quiz-intro?category=${category}&subcategory=${subcategory}`);
             }
+            }, 2000);
+
         } else {
+setIsLoading(false); // Hide the loader
             const errorData = await response.json();
             setErrorMessage(errorData.error || 'Login failed. Please try again.');
             console.error("Login failed:", errorData);
         }
     } catch (error) {
         console.error("Error in login request:", error);
+setIsLoading(false); // Hide the loader
         setErrorMessage('An error occurred. Please try again later.');
     }
 };
-
 
     return (
         <div className="flex flex-col items-center justify-center min-h-screen bg-cover bg-center bg-no-repeat p-6"
         rel="preload"
         style={{ backgroundImage: "url('/images/bg11.webp')" , transition: 'background-image 0.5s ease-in-out'}}>
+{isLoading ? (
+        <Loader  /> // Show loader when loading
+      ) : (
             <div className="bg-white rounded-lg shadow-xl p-8 max-w-md w-full">
                 <h1 className="text-3xl font-bold mb-6 text-center text-blue-600">Login</h1>
                 <form onSubmit={handleSubmit} className="space-y-4">
@@ -116,6 +126,7 @@ export default function Login() {
                     </div>
                 )}
             </div>
+)}
         </div>
     );
 }

@@ -82,7 +82,7 @@ export default function Completion() {
             While you're waiting for the final results, why not check out our Instagram page for the latest updates and exciting science content?
           </p>
           <a
-            href="https://www.instagram.com/sciencecreativityclub"
+            href="https://www.instagram.com/sc_club19"
             target="_blank"
             rel="noopener noreferrer"
             className="inline-block bg-gradient-to-r from-purple-600 to-pink-600 text-white font-bold py-3 px-6 rounded-lg hover:from-purple-700 hover:to-pink-700 transition duration-300 transform hover:scale-105 animate-bounce-light"

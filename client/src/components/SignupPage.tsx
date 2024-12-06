@@ -78,7 +78,7 @@ export default function Home() {
           if (loginResponse.ok) {
             const loginData = await loginResponse.json();
 
-            // Store the token in localStorage
+            // Store in localStorage
             localStorage.setItem('token', loginData.token);
             localStorage.setItem('hasTakenQuiz', 'false');
             localStorage.setItem('category', formData.category);
@@ -89,6 +89,7 @@ export default function Home() {
               setIsLoading(false); // Hide the loader
               navigate(`/quiz-intro?category=${formData.category}&subcategory=${formData.subcategory}`);
             }, 2000); // Add a delay for the loader
+            
           } else {
             const loginErrorData = await loginResponse.json();
             setIsLoading(false); // Hide the loader

@@ -71,7 +71,7 @@ export default function Home() {
             <span className="text-4xl" role="img" aria-label="test tube">🧪</span>
           </div>
           <a 
-            href="https://www.instagram.com/sciencecreativityclub" 
+            href="https://www.instagram.com/sc_club19" 
             target="_blank" 
             rel="noopener noreferrer" 
             className="inline-block bg-gradient-to-r from-purple-600 to-pink-600 text-white font-bold py-3 px-6 rounded-lg hover:from-purple-700 hover:to-pink-700 transition duration-300 transform hover:scale-105"
