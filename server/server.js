@@ -31,7 +31,7 @@ app.use('/api/quiz', quizRoutes);
 // Catch-all redirect for unknown routes to the frontend
 app.get('*', (req, res) => {
     res.redirect(`https://quiz-app-vhpg.onrender.com${req.originalUrl}`);
-});
+    });
 
 // Server Start
 const PORT = process.env.PORT || 5000;
