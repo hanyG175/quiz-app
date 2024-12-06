@@ -16,6 +16,11 @@ app.use(cors({
     credentials: true,
 }));
 
+// Catch-all route for React
+app.get("*", (req, res) => {
+  res.sendFile(path.join(__dirname, "client/build", "index.html"));
+});
+
 // MongoDB Connection
 mongoose.connect(process.env.MONGO_URI, { useNewUrlParser: true, useUnifiedTopology: true })
     .then(() => console.log('MongoDB connected'))
