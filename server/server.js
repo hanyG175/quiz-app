@@ -18,7 +18,7 @@ app.use(cors({
 
 // Catch-all redirect for unknown routes to the frontend
 app.get('*', (req, res) => {
-    res.redirect(`http://localhost:3000${req.originalUrl}`);
+    res.redirect(`https://quiz-app-vhpg.onrender.com${req.originalUrl}`);
 });
 
 // MongoDB Connection
