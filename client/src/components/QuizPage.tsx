@@ -123,10 +123,8 @@ export default function Quiz() {
             <button
               key={index}
               onClick={() => handleAnswerSelect(option)}
-              className={`no-select w-full text-left p-3 border-2 border-gray-300 rounded-lg hover:bg-gray-50 hover:border-blue-500 transition-colors ${
-                isRTL(option) ? 'rtl' : 'ltr'
-              }`}
-            >
+              className={`no-select w-full text-left p-3 border-2 border-gray-300 rounded-lg hover:bg-gray-50 hover:border-blue-500 transition-colors 
+              ${isRTL(option) ? 'rtl' : 'ltr'}`}>
               {option}
             </button>
           ))}
