@@ -18,7 +18,12 @@ app.use(cors({
 
 // Catch-all route for React
 app.get("*", (req, res) => {
-  res.sendFile('/opt/render/project/src/client/build/index.html');
+  res.sendFile(path.join(__dirname, 'build', 'index.html'));
+});
+
+// Catch-all redirect for unknown routes to the frontend
+app.get('*', (req, res) => {
+    res.redirect(`http://localhost:3000${req.originalUrl}`);
 });
 
 // MongoDB Connection
