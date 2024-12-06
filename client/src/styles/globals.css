@@ -23,3 +23,14 @@ body {
   user-select: none; /* Disable text selection */
 }
 
+/* Add this to your CSS file */
+.rtl {
+  direction: rtl;
+  text-align: right;
+}
+
+.ltr {
+  direction: ltr;
+  text-align: left;
+}
+

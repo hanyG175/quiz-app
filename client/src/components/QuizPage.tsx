@@ -5,13 +5,14 @@ import { quizQuestions } from '../utils/quizQuestions.ts';
 import { getBackgroundClass } from '../utils/backgroundStyle.js';
 import Loader from '../components/Loader.tsx';
 
+// Helper function to detect RTL text
+const isRTL = (text) => {
+  const rtlPattern = /[\u0600-\u06FF\u0750-\u077F\uFB50-\uFDFF\uFE70-\uFEFF]/;
+  return rtlPattern.test(text);
+};
+
 export default function Quiz() {
-  const unselectableStyle = {
-    userSelect: 'none' as const,
-    WebkitUserSelect: 'none' as const,
-    MozUserSelect: 'none' as const,
-    msUserSelect: 'none' as const,
-  };
+  
   const navigate = useNavigate();
   const location = useLocation();
   const searchParams = new URLSearchParams(location.search);
@@ -38,7 +39,6 @@ export default function Quiz() {
 
   useEffect(() => {
     if (!questions.length) {
-      // If no questions, exit early to avoid rendering errors
       setShowCompletion(true);
       return;
     }
@@ -79,7 +79,6 @@ export default function Quiz() {
     setTimer(20);
   };
 
-
   if (showCompletion) {
     localStorage.setItem('hasTakenQuiz', 'true');
     navigate('/completion?score=' + score);
@@ -109,7 +108,11 @@ export default function Quiz() {
     >
       <h1 className="text-4xl font-bold mb-8">Quiz</h1>
       <div className="no-select w-full max-w-md bg-white rounded-lg shadow-lg p-6">
-        <div className="no-select mb-6">
+        <div
+          className={`no-select mb-6 ${
+            isRTL(questions[currentQuestion]?.question) ? 'rtl' : 'ltr'
+          }`}
+        >
           <h2 className="text-2xl font-semibold mb-2">
             Question {currentQuestion + 1}
           </h2>
@@ -120,7 +123,9 @@ export default function Quiz() {
             <button
               key={index}
               onClick={() => handleAnswerSelect(option)}
-              className="no-select w-full text-left p-3 border-2 border-gray-300 rounded-lg hover:bg-gray-50 hover:border-blue-500 transition-colors"
+              className={`no-select w-full text-left p-3 border-2 border-gray-300 rounded-lg hover:bg-gray-50 hover:border-blue-500 transition-colors ${
+                isRTL(option) ? 'rtl' : 'ltr'
+              }`}
             >
               {option}
             </button>
@@ -129,12 +134,10 @@ export default function Quiz() {
         <div className="no-select text-xl font-semibold mb-4">
           Time remaining: {timer} seconds
         </div>
-        <div className="no-select text-lg mb-4" style={unselectableStyle}>
+        <div className="no-select text-lg mb-4">
           Question {currentQuestion + 1} of {Math.min(questions.length, 10)}
         </div>
-        <div id="exitButton" className="flex justify-center">
-
-        </div>
+        <div id="exitButton" className="flex justify-center"></div>
       </div>
     </main>
   );
