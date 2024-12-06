@@ -18,7 +18,7 @@ app.use(cors({
 
 // Catch-all route for React
 app.get("*", (req, res) => {
-  res.sendFile(`https://quiz-app-vhpg.onrender.com${req.originalUrl}`);
+  res.sendFile(path.join(__dirname, 'build', 'index.html'));
 });
 
 // MongoDB Connection
