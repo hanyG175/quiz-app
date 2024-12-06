@@ -16,11 +16,6 @@ app.use(cors({
     credentials: true,
 }));
 
-// Catch-all route for React
-app.get("*", (req, res) => {
-  res.sendFile(path.resolve("client", "build", "index.html"));
-});
-
 // Catch-all redirect for unknown routes to the frontend
 app.get('*', (req, res) => {
     res.redirect(`http://localhost:3000${req.originalUrl}`);
