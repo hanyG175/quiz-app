@@ -53,7 +53,7 @@ router.post('/submit-score', async (req, res) => {
 // Leaderboard (ranked list of users)
 router.get('/leaderboard', async (req, res) => {
     try {
-      const users = await User.find().sort({ score: -1 }).select('name email grade category subcategory score');
+      const users = await User.find().sort({ score: -1 }).select('name email grade category subcategory score hasTakenQuiz');
       res.status(200).json(users);
     } catch (error) {
       res.status(500).json({ error: 'Failed to retrieve leaderboard' });

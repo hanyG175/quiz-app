@@ -59,4 +59,29 @@ router.post('/login', async (req, res) => {
 });
 
 
+const generateHash = async () => {
+  const password = 'admin_rayane'; // Replace with your desired password
+  const saltRounds = 10; // Cost factor
+  const hashedPassword = await bcrypt.hash(password, saltRounds);
+  return {
+    username: 'admin',
+    password: hashedPassword, 
+  };
+};
+
+router.post('/admin-login', async (req, res) => {
+  const { username, password } = req.body;
+  const ADMIN_CREDENTIALS = await generateHash();
+  
+  if (username === ADMIN_CREDENTIALS.username) {
+    const passwordMatch = await bcrypt.compare(password, ADMIN_CREDENTIALS.password);
+    if (passwordMatch) {
+      const token = jwt.sign({ role: 'admin' }, process.env.JWT_SECRET, { expiresIn: '1h' });
+      return res.status(200).json({ token });
+    }
+  }
+  res.status(401).json({ message: 'Invalid credentials' });
+});
+
+
 module.exports = router;

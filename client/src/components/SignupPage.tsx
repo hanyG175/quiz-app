@@ -54,7 +54,7 @@ export default function Home() {
       setIsLoading(true); // Show the loader
 
       try {
-        const registerResponse = await fetch('https://quiz-app-serve.onrender.com/api/auth/register', {
+        const registerResponse = await fetch('http://localhost:3000/api/auth/register', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -67,7 +67,7 @@ export default function Home() {
           toast.success(registerData.message || 'Registered successfully!');
 
           // Log in the user
-          const loginResponse = await fetch('https://quiz-app-serve.onrender.com/api/auth/login', {
+          const loginResponse = await fetch('https://quiz-app-server.onrender.com/api/auth/login', {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json',
@@ -125,7 +125,7 @@ export default function Home() {
           <h1 className="text-3xl font-bold text-center mb-6">Competition Signup</h1>
           <form onSubmit={handleSubmit}>
             <div className="mb-4">
-              <label htmlFor="name" className="block text-lg font-medium text-gray-700">Full Name</label>
+              <label htmlFor="name" className="block text-lg font-medium text-gray-700 mb-1">Full Name</label>
               <input
                 type="text"
                 id="name"
@@ -138,7 +138,7 @@ export default function Home() {
               />
             </div>
             <div className="mb-4">
-              <label htmlFor="email" className="block text-lg font-medium text-gray-700">Email</label>
+              <label htmlFor="email" className="block text-lg font-medium text-gray-700 mb-1">Email</label>
               <input
                 type="email"
                 id="email"
@@ -152,7 +152,7 @@ export default function Home() {
               {emailError && <p className="text-red-500 text-sm mt-1">{emailError}</p>}
             </div>
             <div className="mb-4">
-              <label htmlFor="grade" className="block text-lg font-medium text-gray-700">Grade</label>
+              <label htmlFor="grade" className="block text-lg font-medium text-gray-700 mb-1">Year</label>
               <select
                 id="grade"
                 name="grade"
@@ -170,7 +170,7 @@ export default function Home() {
               </select>
             </div>
             <div className="mb-4">
-              <label htmlFor="category" className="block text-lg font-medium text-gray-700">Category</label>
+              <label htmlFor="category" className="block text-lg font-medium text-gray-700 mb-1">Category</label>
               <select
                 id="category"
                 name="category"
@@ -187,7 +187,7 @@ export default function Home() {
             </div>
             {subcategories.length > 0 && (
               <div className="mb-6">
-                <label htmlFor="subcategory" className="block text-lg font-medium text-gray-700">Subcategory</label>
+                <label htmlFor="subcategory" className="block text-lg font-medium text-gray-700 mb-1">Subcategory</label>
                 <select
                   id="subcategory"
                   name="subcategory"

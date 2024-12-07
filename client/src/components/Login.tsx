@@ -36,7 +36,7 @@ const [isLoading, setIsLoading] = useState(false); // Loading state
     }
 setIsLoading(true); // Show the loader
     try {
-        const response = await fetch('https://quiz-app-serve.onrender.com/api/auth/login', {
+        const response = await fetch('https://quiz-app-server.onrender.com/api/auth/login', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ name: formData.name, email: formData.email }),
@@ -64,7 +64,7 @@ setIsLoading(true); // Show the loader
             }, 2000);
 
         } else {
-setIsLoading(false); // Hide the loader
+            setIsLoading(false); // Hide the loader
             const errorData = await response.json();
             setErrorMessage(errorData.error || 'Login failed. Please try again.');
             console.error("Login failed:", errorData);
