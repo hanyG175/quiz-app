@@ -13,7 +13,7 @@ export default function QuizIntro() {
   
   useEffect(() => {
       // If the user has completed or abandoned the quiz, block access
-      if (quizStatus === 'inProgress' || quizStatus === 'completed') {
+      if (quizStatus === 'abandoned' || quizStatus === 'completed') {
         alert('You cannot start the quiz again.');
         navigate('/');
       }

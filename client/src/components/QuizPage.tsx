@@ -37,7 +37,7 @@ export default function Quiz() {
   useEffect(() => {
     const quizStatus = localStorage.getItem('quizStatus');
     if (quizStatus !== 'inProgress') {
-      alert('You cannot access the quiz directly or retake it.');
+      alert('It seems that you have abandoned the quiz before or completed, you cannot access the quiz directly or retake it.');
       navigate('/');
     }
   }, [navigate]);
@@ -94,7 +94,7 @@ export default function Quiz() {
   const handleBeforeUnload = (event) => {
     event.preventDefault();
     event.returnValue = '';
-    localStorage.setItem('quizStatus', 'inProgress');
+    localStorage.setItem('quizStatus', 'abandoned');
   };
 
   useEffect(() => {
