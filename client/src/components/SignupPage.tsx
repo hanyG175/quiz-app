@@ -54,7 +54,7 @@ export default function Home() {
       setIsLoading(true); // Show the loader
 
       try {
-        const registerResponse = await fetch('http://localhost:3000/api/auth/register', {
+        const registerResponse = await fetch('https://quiz-app-server.onrender.com/api/auth/register', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
