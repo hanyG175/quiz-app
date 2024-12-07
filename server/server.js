@@ -10,16 +10,12 @@ dotenv.config();
 
 // Middleware
 app.use(express.json());
+
 app.use(cors({
     origin: "https://mindquest.onrender.com", // Frontend URL
     methods: ['GET', 'POST', 'PUT', 'DELETE'],
     credentials: true,
 }));
-
-// Catch-all redirect for unknown routes to the frontend
-app.get('*', (req, res) => {
-    res.redirect(`https://mindquest.onrender.com${req.originalUrl}`);
-});
 
 // MongoDB Connection
 mongoose.connect(process.env.MONGO_URI, { useNewUrlParser: true, useUnifiedTopology: true })
@@ -33,6 +29,10 @@ app.use('/api/auth', authRoutes);
 const quizRoutes = require('./routes/quiz');
 app.use('/api/quiz', quizRoutes);
 
+// Catch-all redirect for unknown routes to the frontend
+app.get('*', (req, res) => {
+    res.redirect(`https://mindquest.onrender.com${req.originalUrl}`);
+});
 
 // Server Start
 const PORT = process.env.PORT || 5000;
