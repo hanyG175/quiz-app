@@ -10,6 +10,13 @@ export default function QuizIntro() {
   const subcategory = searchParams.get('subcategory') || '';
   const [quizStatus, setQuizStatus] = useState(localStorage.getItem('quizStatus') || ''); 
 
+  useEffect(() => {
+    // If the user has completed or abandoned the quiz, block access
+    if (quizStatus === 'abandoned' || quizStatus === 'completed') {
+      alert('You cannot start the quiz again.');
+      navigate('/');
+    }
+  }, [quizStatus, navigate]);
 
   const handleStartQuiz = () => {
     setQuizStatus('inProgress');
