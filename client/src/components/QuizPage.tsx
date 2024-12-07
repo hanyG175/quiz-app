@@ -95,6 +95,7 @@ export default function Quiz() {
     event.preventDefault();
     event.returnValue = '';
     localStorage.setItem('quizStatus', 'abandoned');
+    console.log("User abandoned the quiz.");
   };
 
   useEffect(() => {
