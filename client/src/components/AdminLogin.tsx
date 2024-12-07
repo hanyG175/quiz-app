@@ -10,7 +10,7 @@ function AdminLogin({ onLogin }) {
   const handleLogin = async (e) => {
     e.preventDefault();
     try {
-      const response = await fetch('https://quiz-app-server.onrender.com/api/auth/admin-login', {
+      const response = await fetch('https://quiz-app-serve.onrender.com/api/auth/admin-login', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ username, password }),

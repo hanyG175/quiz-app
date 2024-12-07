@@ -54,7 +54,7 @@ export default function Home() {
       setIsLoading(true); // Show the loader
 
       try {
-        const registerResponse = await fetch('https://quiz-app-server.onrender.com/api/auth/register', {
+        const registerResponse = await fetch('https://quiz-app-serve.onrender.com/api/auth/register', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -67,7 +67,7 @@ export default function Home() {
           toast.success(registerData.message || 'Registered successfully!');
 
           // Log in the user
-          const loginResponse = await fetch('https://quiz-app-server.onrender.com/api/auth/login', {
+          const loginResponse = await fetch('https://quiz-app-serve.onrender.com/api/auth/login', {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json',

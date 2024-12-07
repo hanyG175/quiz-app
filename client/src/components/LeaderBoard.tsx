@@ -22,7 +22,7 @@ export default function Leaderboard({ isAdminView = false }) {
   useEffect(() => {
     const fetchLeaderboard = async () => {
       try {
-        const response = await fetch('https://quiz-app-server.onrender.com/api/quiz/leaderboard');
+        const response = await fetch('https://quiz-app-serve.onrender.com/api/quiz/leaderboard');
         const data = await response.json();
         setUsers(data);
       } catch (error) {
@@ -54,7 +54,7 @@ export default function Leaderboard({ isAdminView = false }) {
 
   const exportScores = async () => {
     try {
-      const response = await fetch('https://quiz-app-server.onrender.com/api/quiz/export-scores');
+      const response = await fetch('https://quiz-app-serve.onrender.com/api/quiz/export-scores');
       if (response.ok) {
         const blob = await response.blob();
         const url = window.URL.createObjectURL(blob);

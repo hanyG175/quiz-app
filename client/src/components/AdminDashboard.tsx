@@ -15,7 +15,7 @@ export default function AdminDashboard() {
     
     const fetchData = async () => {
         try {
-          const response = await fetch('https://quiz-app-server.onrender.com/api/quiz/leaderboard');
+          const response = await fetch('https://quiz-app-serve.onrender.com/api/quiz/leaderboard');
           const data = await response.json();
 
           const usersCount = data.length;
