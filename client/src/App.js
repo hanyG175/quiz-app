@@ -16,6 +16,7 @@ import RequireNoResult from "./components/ProtectedResult.tsx";
 import LeaderBoard from "./components/LeaderBoard.tsx";
 import AdminLogin from './components/AdminLogin.tsx';
 import AdminDashboard from './components/AdminDashboard.tsx';
+
 function App() {
   const [isAdmin, setIsAdmin] = React.useState(() => {
     // Retrieve isAdmin state from localStorage or default to false
@@ -24,58 +25,62 @@ function App() {
 
   const handleAdminLogin = (authenticated) => {
     setIsAdmin(authenticated);
-    localStorage.setItem('isAdmin', authenticated); // Persist state
+    localStorage.setItem('isAdmin', String(authenticated)); // Persist state
   };
 
   return (
-    <><ToastContainer
-      position="top-right"
-      autoClose={2000}
-      hideProgressBar={false}
-      newestOnTop={false}
-      closeOnClick
-      rtl={false}
-      pauseOnFocusLoss
-      draggable
-      pauseOnHover />
+    <>
+      <ToastContainer
+        position="top-right"
+        autoClose={2000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+      />
       <Router>
         <div className="flex flex-col min-h-screen">
-        <Routes>
-          <Route path="/admin/*" element={
-            <Routes>
-              <Route path="login" element={<AdminLogin onLogin={handleAdminLogin} />} />
-              <Route path="dashboard" element={isAdmin ? <AdminDashboard/> : <Navigate to="/admin/login" />} />
-              <Route path="leaderboard" element={ isAdmin ? <LeaderBoard isAdminView={true} /> : <Navigate to="/admin/login" />} />
-            </Routes>
-          } />
-          <Route path="*" element={
-            <>
-          <Header />
-          <main className="flex-grow">
-            <Routes>
-              <Route path="/" element={<Home />} />
-              <Route path="/signup" element={<SignupPage />} />
-              <Route path="/login" element={<Login />} />
-              <Route path="/quiz-intro" element={<ProtectedRoute><RequireNoQuiz><QuizIntro /></RequireNoQuiz></ProtectedRoute>} />
-              <Route path="/quiz" element={<ProtectedRoute><RequireNoQuiz><QuizPage /></RequireNoQuiz></ProtectedRoute>} />
-              <Route path="/completion" element={<ProtectedRoute><RequireNoResult><CompletionPage /></RequireNoResult></ProtectedRoute>} />
-              {/* <Route
-                path="/admin-login"
-                element={<AdminLogin onLogin={handleAdminLogin} />}
-              />
-              <Route
-                path="/leaderboard"
-                element={isAdmin ? <LeaderBoard /> : <Navigate to="/admin-login" />}
-              />
-              <Route path="/admin-dashboard" element={<AdminDashboard />} /> */}
-            </Routes>
-          </main>
-          <Footer />
-          </>
-          } />
-        </Routes>
+          <Routes>
+            {/* Admin Routes */}
+            <Route path="/admin/login" element={<AdminLogin onLogin={handleAdminLogin} />} />
+            <Route path="/admin/dashboard" element={isAdmin ? <AdminDashboard /> : <Navigate to="/admin/login" />} />
+            <Route path="/admin/leaderboard" element={isAdmin ? <LeaderBoard isAdminView={true} /> : <Navigate to="/admin/login" />} />
+
+            {/* Main Application Routes */}
+            <Route path="/" element={<><Header /><main className="flex-grow"><Home /></main><Footer /></>} />
+            <Route path="/signup" element={<><Header /><main className="flex-grow"><SignupPage /></main><Footer /></>} />
+            <Route path="/login" element={<><Header /><main className="flex-grow"><Login /></main><Footer /></>} />
+            <Route path="/quiz-intro" element={
+              <ProtectedRoute>
+                <RequireNoQuiz>
+                  <><Header /><main className="flex-grow"><QuizIntro /></main><Footer /></>
+                </RequireNoQuiz>
+              </ProtectedRoute>
+            } />
+            <Route path="/quiz" element={
+              <ProtectedRoute>
+                <RequireNoQuiz>
+                  <><Header /><main className="flex-grow"><QuizPage /></main><Footer /></>
+                </RequireNoQuiz>
+              </ProtectedRoute>
+            } />
+            <Route path="/completion" element={
+              <ProtectedRoute>
+                <RequireNoResult>
+                  <><Header /><main className="flex-grow"><CompletionPage /></main><Footer /></>
+                </RequireNoResult>
+              </ProtectedRoute>
+            } />
+
+            {/* Catch-All Route for 404 */}
+            <Route path="*" element={<main className="flex-grow text-center"><h1>404 - Page Not Found</h1></main>} />
+          </Routes>
         </div>
-      </Router></>
+      </Router>
+    </>
   );
 }
 
