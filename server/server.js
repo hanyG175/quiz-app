@@ -17,9 +17,9 @@ app.use(cors({
 }));
 
 // Catch-all redirect for unknown routes to the frontend
-// app.get('*', (req, res) => {
-//     res.redirect(`http://localhost:3001${req.originalUrl}`);
-// });
+app.get('*', (req, res) => {
+    res.redirect(`https://mindquest.onrender.com${req.originalUrl}`);
+});
 
 // MongoDB Connection
 mongoose.connect(process.env.MONGO_URI, { useNewUrlParser: true, useUnifiedTopology: true })
