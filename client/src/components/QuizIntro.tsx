@@ -1,5 +1,5 @@
 'use client'
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { useNavigate, useLocation } from 'react-router-dom'
 
 export default function QuizIntro() {
@@ -9,10 +9,21 @@ export default function QuizIntro() {
   const category = searchParams.get('category') || ''
   const subcategory = searchParams.get('subcategory') || ''
   const hasTakenQuiz = localStorage.getItem('hasTakenQuiz');
+  const [quizStatus, setQuizStatus] = useState(localStorage.getItem('quizStatus') || ''); // Retrieve quiz status
+  
+  useEffect(() => {
+      // If the user has completed or abandoned the quiz, block access
+      if (quizStatus === 'inProgress' || quizStatus === 'completed') {
+        alert('You cannot start the quiz again.');
+        navigate('/');
+      }
+    }, [quizStatus, navigate]);
 
   const handleStartQuiz = () => {
+    localStorage.setItem('quizStatus', 'inProgress');
     navigate(`/quiz?category=${category}&subcategory=${subcategory}`)
   }
+  
   const handleSignOut = () => {
     localStorage.removeItem('token');
     localStorage.removeItem('userData');

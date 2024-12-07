@@ -33,11 +33,17 @@ export default function Quiz() {
         : quizQuestions[category]
       : [];
 
-  // Console log for debugging
-  console.log('Questions:', questions);
-  console.log('Current Question Index:', currentQuestion);
+  // Ensure only users with 'inProgress' status can access the quiz
+  useEffect(() => {
+    const quizStatus = localStorage.getItem('quizStatus');
+    if (quizStatus !== 'inProgress') {
+      alert('You cannot access the quiz directly or retake it.');
+      navigate('/');
+    }
+  }, [navigate]);
 
   useEffect(() => {
+
     if (!questions.length) {
       setShowCompletion(true);
       return;
@@ -65,7 +71,7 @@ export default function Quiz() {
     }, 1000);
 
     return () => clearInterval(countdown);
-  }, [currentQuestion, questions]);
+  }, [currentQuestion, questions, navigate]);
 
   const handleAnswerSelect = (answer: string) => {
     if (!questions[currentQuestion]) return;
@@ -79,9 +85,27 @@ export default function Quiz() {
     setTimer(20);
   };
 
-  if (showCompletion) {
+  const handleQuizCompletion = () => {
     localStorage.setItem('hasTakenQuiz', 'true');
+    localStorage.setItem('quizStatus', 'completed'); // Allow user to retake
     navigate('/completion?score=' + score);
+  };
+
+  const handleBeforeUnload = (event) => {
+    event.preventDefault();
+    event.returnValue = '';
+    localStorage.setItem('quizStatus', 'inProgress');
+  };
+
+  useEffect(() => {
+    window.addEventListener('beforeunload', handleBeforeUnload);
+    return () => {
+      window.removeEventListener('beforeunload', handleBeforeUnload);
+    };
+  }, []);
+
+  if (showCompletion) {
+    handleQuizCompletion();
   }
 
   if (isLoading || !questions[currentQuestion]) {
