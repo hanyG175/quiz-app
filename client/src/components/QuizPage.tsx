@@ -73,7 +73,7 @@ export default function Quiz() {
     return () => clearInterval(countdown);
   }, [currentQuestion, questions, navigate]);
 
-  const handleAnswerSelect = (answer: string) => {
+  const handleAnswerSelect = (answer) => {
     if (!questions[currentQuestion]) return;
 
     setSelectedAnswer(answer);
@@ -98,10 +98,20 @@ export default function Quiz() {
     console.log("User abandoned the quiz.");
   };
 
+  const handleVisibilityChange = () => {
+    if (document.visibilityState === 'hidden') {
+      localStorage.setItem('quizStatus', 'abandoned');
+      alert('You have navigated away from the quiz. The quiz is now abandoned and cannot be resumed.');
+      navigate('/');
+    }
+  };
+
   useEffect(() => {
     window.addEventListener('beforeunload', handleBeforeUnload);
+    document.addEventListener('visibilitychange', handleVisibilityChange);
     return () => {
       window.removeEventListener('beforeunload', handleBeforeUnload);
+      document.removeEventListener('visibilitychange', handleVisibilityChange);
     };
   }, []);
 
