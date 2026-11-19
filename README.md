@@ -2,6 +2,10 @@
 
 A web application for the Club's annual competition. This interactive platform allows students to register, take quizzes in various scientific categories, view their scores, and compete on a leaderboard.
 
+| | | |
+| :---: | :---: | :---: |
+| <img src="https://github.com/user-attachments/assets/8c458503-ec95-4a9d-8320-cbd9f12b8a3b" alt="image" /> | <img src="https://github.com/user-attachments/assets/d07a65d9-9687-4dec-b54c-bbf79b8af467" alt="Screenshot 2026-11-19 152600" /> | <img src="https://github.com/user-attachments/assets/bd617119-70cb-4397-906d-76be4d1a97ca" alt="Screenshot 2026-11-19 152714" /> |
+
 ## 🌟 Features
 
 ### User Features
